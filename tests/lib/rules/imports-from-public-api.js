@@ -37,6 +37,24 @@ ruleTester.run("imports-from-public-api", rule, {
       errors: [],
       options: aliasOptions
     },
+    {
+      filename: 'C:\\Users\\ulbi-project\\src\\entities\\file.test.ts',
+      code: "import { SomeActions, SomeReducer } from '@/entities/Article/testing'",
+      errors: [],
+      options: [{
+        alias: '@',
+        testFilesPatterns: ['**/*.test.ts', '**/*.test.ts', '**/StoreDecorator.tsx']
+      }]
+    },
+    {
+      filename: 'C:\\Users\\ulbi-project\\src\\entities\\StoreDecorator.tsx',
+      code: "import { SomeActions, SomeReducer } from '@/entities/Article/testing'",
+      errors: [],
+      options: [{
+        alias: '@',
+        testFilesPatterns: ['**/*.test.ts', '**/*.test.ts', '**/StoreDecorator.tsx']
+      }]
+    },
   ],
 
   invalid: [
@@ -45,5 +63,25 @@ ruleTester.run("imports-from-public-api", rule, {
       errors: [{message: "Absolute import is allowed only from the public api (index.ts)"}],
       options: aliasOptions
     },
+    {
+
+      filename: 'C:\\Users\\ulbi-project\\src\\entities\\StoreDecorator.tsx',
+      code: "import { SomeActions, SomeReducer } from '@/entities/Article/testing/file.tsx'",
+      errors: [{message: "Absolute import is allowed only from the public api (index.ts)"}],
+      options: [{
+        alias: '@',
+        testFilesPatterns: ['**/*.test.ts', '**/*.test.ts', '**/StoreDecorator.tsx']
+      }]
+    },
+    {
+      filename: 'C:\\Users\\ulbi-project\\src\\entities\\forbidden.ts',
+      code: "import { SomeActions, SomeReducer } from '@/entities/Article/testing'",
+      errors: [{message: "The test data must be imported from the public api (testing.ts)"}],
+      options: [{
+        alias: '@',
+        testFilesPatterns: ['**/*.test.ts', '**/*.test.ts', '**/StoreDecorator.tsx']
+      }]
+    },
   ],
 });
+
